@@ -1,14 +1,125 @@
 package com.example.android.bakingapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.android.bakingapp.Ingredient;
+import com.example.android.bakingapp.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.RecyclerViewAdapterOnClickHandler {
+    //private TextView textViewResult;
+    private static final String LOG_TAG = "nathanTest";
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private RecyclerViewAdapter.RecyclerViewAdapterOnClickHandler clickHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Test comment for second commit and push within Android Studio
+        clickHandler = this;
+        recyclerView = findViewById(R.id.recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        //recyclerView.setHasFixedSize(true);
+        //textViewResult = findViewById(R.id.text_view_result);
+        RecipeRepository recipeRepository = new RecipeRepository();
+        getJsonParsed();
+    }
+
+    public void getJsonParsed(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://d17h27t6h515a5.cloudfront.net/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+        Call<List<Recipe>> call = jsonPlaceHolderApi.getRecipe();
+        call.enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                ArrayList<Integer> mIds = new ArrayList<>();
+                ArrayList<String> mTexts = new ArrayList<>();
+                ArrayList<Long> mServings = new ArrayList<>();
+                ArrayList<String> mImages = new ArrayList<>();
+                ArrayList<ArrayList<Ingredient>> mIngredients = new ArrayList<>();
+                ArrayList<ArrayList<Step>> mSteps = new ArrayList<>();
+                if (!response.isSuccessful()){
+                    return;
+                }
+                List<Recipe> recipes = response.body();
+                for (Recipe recipe : recipes) {
+                    String content = "";
+                    content += "ID: " + recipe.getId() + "\n";
+                    mIds.add(recipe.getId());
+                    content += "Text: " + recipe.getText() + "\n";
+                    mTexts.add(recipe.getText());
+                    content += "Servings: " + recipe.getServings() + "\n";
+                    mServings.add(recipe.getServings());
+                    content += "Image: " + recipe.getImage() + "\n\n";
+                    mImages.add(recipe.getImage());
+                    content += "Ingredients:\n";
+                    ArrayList<Ingredient> ingredients = recipe.getIngredients();
+                    mIngredients.add(ingredients);
+                    for (Ingredient ingredient : ingredients ){
+                        content += "Quantity: " + ingredient.getQuantity() + "\n";
+                        content += "Measure: " + ingredient.getMeasure() + "\n";
+                        content += "Ingredient: " + ingredient.getIngredient() + "\n\n";
+                    }
+                    content += "Steps:\n";
+                    ArrayList<Step> steps = recipe.getSteps();
+                    mSteps.add(steps);
+                    for (Step step : steps ){
+                        content += "ID: " + step.getId() + "\n";
+                        content += "Short Description: " + step.getShortDescription() + "\n";
+                        content += "Description: " + step.getDescription() + "\n";
+                        content += "Video URL: " + step.getVideoURL() + "\n";
+                        content += "Thumbnail: " + step.getThumbnailURL() + "\n\n";
+                    }
+                    //textViewResult.append(content);
+                }
+                recyclerViewAdapter = new RecyclerViewAdapter(mIds, mTexts, mServings, mImages, mIngredients, mSteps, clickHandler);
+                recyclerView.setAdapter(recyclerViewAdapter);
+            }
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+            }
+        });
+    }
+
+    @Override
+    public void onClick(int id, String text, Long serving, String image, ArrayList<Ingredient> ingredients, ArrayList<Step> steps) {
+        Intent intent = new Intent(this, RecipeStepsActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("text", text);
+        intent.putExtra("serving", serving);
+        intent.putExtra("image", image);
+        //how to put extra for arraylists?
+/*        Bundle ingredientsBundle = new Bundle();
+        Bundle stepsBundle = new Bundle();
+        ingredientsBundle.putSerializable("ingredients", ingredients);
+        stepsBundle.putSerializable("steps", steps);
+        intent.putExtra("ingredients", ingredientsBundle);
+        intent.putExtra("steps", stepsBundle);*/
+        startActivity(intent);
     }
 }
