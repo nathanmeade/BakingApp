@@ -19,6 +19,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,30 +29,26 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.RecyclerViewAdapterOnClickHandler {
-    //private TextView textViewResult;
     private static final String LOG_TAG = "nathanTest";
-    private RecyclerView recyclerView;
+    @BindView(R.id.recycler_view) RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private RecyclerViewAdapter.RecyclerViewAdapterOnClickHandler clickHandler;
-
+    @BindString(R.string.base_url) String baseUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         clickHandler = this;
-        recyclerView = findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        //recyclerView.setHasFixedSize(true);
-        //textViewResult = findViewById(R.id.text_view_result);
-        RecipeRepository recipeRepository = new RecipeRepository();
         getJsonParsed();
     }
 
     public void getJsonParsed(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://d17h27t6h515a5.cloudfront.net/")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
