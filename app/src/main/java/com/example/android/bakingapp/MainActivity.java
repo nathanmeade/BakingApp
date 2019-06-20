@@ -3,19 +3,10 @@ package com.example.android.bakingapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.TextView;
 
-import com.example.android.bakingapp.Ingredient;
-import com.example.android.bakingapp.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,34 +58,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 }
                 List<Recipe> recipes = response.body();
                 for (Recipe recipe : recipes) {
-                    String content = "";
-                    content += "ID: " + recipe.getId() + "\n";
                     mIds.add(recipe.getId());
-                    content += "Text: " + recipe.getText() + "\n";
                     mTexts.add(recipe.getText());
-                    content += "Servings: " + recipe.getServings() + "\n";
                     mServings.add(recipe.getServings());
-                    content += "Image: " + recipe.getImage() + "\n\n";
                     mImages.add(recipe.getImage());
-                    content += "Ingredients:\n";
                     ArrayList<Ingredient> ingredients = recipe.getIngredients();
                     mIngredients.add(ingredients);
-                    for (Ingredient ingredient : ingredients ){
-                        content += "Quantity: " + ingredient.getQuantity() + "\n";
-                        content += "Measure: " + ingredient.getMeasure() + "\n";
-                        content += "Ingredient: " + ingredient.getIngredient() + "\n\n";
-                    }
-                    content += "Steps:\n";
                     ArrayList<Step> steps = recipe.getSteps();
                     mSteps.add(steps);
-                    for (Step step : steps ){
-                        content += "ID: " + step.getId() + "\n";
-                        content += "Short Description: " + step.getShortDescription() + "\n";
-                        content += "Description: " + step.getDescription() + "\n";
-                        content += "Video URL: " + step.getVideoURL() + "\n";
-                        content += "Thumbnail: " + step.getThumbnailURL() + "\n\n";
-                    }
-                    //textViewResult.append(content);
                 }
                 recyclerViewAdapter = new RecyclerViewAdapter(mIds, mTexts, mServings, mImages, mIngredients, mSteps, clickHandler);
                 recyclerView.setAdapter(recyclerViewAdapter);
@@ -113,12 +84,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         intent.putExtra("serving", serving);
         intent.putExtra("image", image);
         //how to put extra for arraylists?
-/*        Bundle ingredientsBundle = new Bundle();
-        Bundle stepsBundle = new Bundle();
-        ingredientsBundle.putSerializable("ingredients", ingredients);
-        stepsBundle.putSerializable("steps", steps);
+        Bundle ingredientsBundle = new Bundle();
+        //Bundle stepsBundle = new Bundle();
+        ingredientsBundle.putSerializable("ingredients", (Serializable) ingredients);
+        //stepsBundle.putSerializable("steps", steps);
         intent.putExtra("ingredients", ingredientsBundle);
-        intent.putExtra("steps", stepsBundle);*/
+        //intent.putExtra("steps", stepsBundle);
         startActivity(intent);
     }
 }
