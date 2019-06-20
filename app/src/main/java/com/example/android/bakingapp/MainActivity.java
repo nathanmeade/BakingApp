@@ -85,11 +85,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         intent.putExtra("image", image);
         //how to put extra for arraylists?
         Bundle ingredientsBundle = new Bundle();
-        //Bundle stepsBundle = new Bundle();
+        Bundle stepsBundle = new Bundle();
         ingredientsBundle.putSerializable("ingredients", (Serializable) ingredients);
-        //stepsBundle.putSerializable("steps", steps);
+        stepsBundle.putSerializable("steps", steps);
         intent.putExtra("ingredients", ingredientsBundle);
-        //intent.putExtra("steps", stepsBundle);
+        intent.putExtra("steps", stepsBundle);
         startActivity(intent);
     }
 }

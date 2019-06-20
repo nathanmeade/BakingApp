@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class RecipeStepsActivity extends AppCompatActivity {
     private Bundle ingredientsBundle;
+    private Bundle stepsBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ public class RecipeStepsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra("text");
         ingredientsBundle = intent.getBundleExtra("ingredients");
+        stepsBundle = intent.getBundleExtra("steps");
         ArrayList<Ingredient> ingredients = (ArrayList<Ingredient>) ingredientsBundle.getSerializable("ingredients");
         textView.setText(id);
         for (Ingredient ingredient: ingredients) {
@@ -29,6 +31,12 @@ public class RecipeStepsActivity extends AppCompatActivity {
     public void ingredientsIntent(View view){
         Intent intent = new Intent(this, IngredientsActivity.class);
         intent.putExtra("ingredients", ingredientsBundle);
+        startActivity(intent);
+    }
+
+    public void stepsIntent(View view){
+        Intent intent = new Intent(this, RecipeStepDetailsActivity.class);
+        intent.putExtra("steps", stepsBundle);
         startActivity(intent);
     }
 }
