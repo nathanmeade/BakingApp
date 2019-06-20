@@ -3,32 +3,24 @@ package com.example.android.bakingapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class RecipeStepsActivity extends AppCompatActivity {
+public class IngredientsActivity extends AppCompatActivity {
     private Bundle ingredientsBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_steps);
-        TextView textView = findViewById(R.id.text_view);
+        setContentView(R.layout.activity_ingredients);
         Intent intent = getIntent();
-        String id = intent.getStringExtra("text");
         ingredientsBundle = intent.getBundleExtra("ingredients");
         ArrayList<Ingredient> ingredients = (ArrayList<Ingredient>) ingredientsBundle.getSerializable("ingredients");
-        textView.setText(id);
+        TextView textView = findViewById(R.id.ingredients_text_view);
+        textView.setText("test");
         for (Ingredient ingredient: ingredients) {
             textView.append(ingredient.getIngredient());
         }
-    }
-
-    public void ingredientsIntent(View view){
-        Intent intent = new Intent(this, IngredientsActivity.class);
-        intent.putExtra("ingredients", ingredientsBundle);
-        startActivity(intent);
     }
 }
