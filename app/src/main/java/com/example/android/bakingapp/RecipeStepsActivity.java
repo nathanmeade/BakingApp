@@ -20,25 +20,16 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
     RecyclerView recyclerView;
     private RecipeStepAdapter recipeStepAdapter;
     private RecipeStepAdapter.RecipeStepAdapterOnClickHandler recipeStepAdapterOnClickHandler;
-    private int totalSteps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_steps);
-        totalSteps = 0;
         ButterKnife.bind(this);
         recipeStepAdapterOnClickHandler = this;
-//        TextView textView = findViewById(R.id.text_view);
         Intent intent = getIntent();
-        String id = intent.getStringExtra("text");
         ingredientsBundle = intent.getBundleExtra("ingredients");
         stepsBundle = intent.getBundleExtra("steps");
-        ArrayList<Ingredient> ingredients = (ArrayList<Ingredient>) ingredientsBundle.getSerializable("ingredients");
-/*        textView.setText(id);
-        for (Ingredient ingredient: ingredients) {
-            textView.append(ingredient.getIngredient());
-        }*/
         initializeRecyclerView();
     }
 
@@ -47,12 +38,6 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         intent.putExtra("ingredients", ingredientsBundle);
         startActivity(intent);
     }
-
-/*    public void stepsIntent(View view){
-        Intent intent = new Intent(this, RecipeStepDetailsActivity.class);
-        intent.putExtra("steps", stepsBundle);
-        startActivity(intent);
-    }*/
 
     //Account for including next and previous steps, if applicable.
     //The entire Steps bundle should probably be sent to the step details activity, just with a step id as an extra that is passed in the intent.
@@ -66,13 +51,14 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         //startActivity(intent);
     //}
     @Override
-    public void onClick(int id, String shortDescription, String description, String videoUrl, String thumbnailUrl) {
+    public void onClick(int id, Bundle bundle) {
         Intent intent = new Intent(this, RecipeStepDetailsActivity.class);
         intent.putExtra("id", id);
-        intent.putExtra("shortDescription", shortDescription);
+/*        intent.putExtra("shortDescription", shortDescription);
         intent.putExtra("description", description);
         intent.putExtra("videoUrl", videoUrl);
-        intent.putExtra("thumbnailUrl", thumbnailUrl);
+        intent.putExtra("thumbnailUrl", thumbnailUrl);*/
+        intent.putExtra("steps", stepsBundle);
         startActivity(intent);
     }
 
@@ -84,7 +70,6 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         ArrayList<String> mVideoUrls = new ArrayList<>();
         ArrayList<String> mThumbnailUrls = new ArrayList<>();
         for (Step step : steps ){
-            totalSteps++;
             mIds.add(step.getId());
             mShortDescriptions.add(step.getShortDescription());
             mDescriptions.add(step.getDescription());
@@ -93,7 +78,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recipeStepAdapter = new RecipeStepAdapter(mIds, mShortDescriptions, mDescriptions, mVideoUrls, mThumbnailUrls, recipeStepAdapterOnClickHandler);
+        recipeStepAdapter = new RecipeStepAdapter(mIds, stepsBundle, mShortDescriptions, recipeStepAdapterOnClickHandler);
         recyclerView.setAdapter(recipeStepAdapter);
     }
 }

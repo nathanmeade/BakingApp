@@ -1,6 +1,7 @@
 package com.example.android.bakingapp;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,21 +14,25 @@ import java.util.ArrayList;
 public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.RecipeStepAdapterViewHolder> {
     private ArrayList<Integer> mIds;
     private ArrayList<String> mShortDescriptions;
-    private ArrayList<String> mDescriptions;
+/*    private ArrayList<String> mDescriptions;
     private ArrayList<String> mVideoUrls;
-    private ArrayList<String> mThumbnailUrls;
+    private ArrayList<String> mThumbnailUrls;*/
+    private Bundle bundle;
     private final RecipeStepAdapterOnClickHandler mClickHandler;
 
     public interface RecipeStepAdapterOnClickHandler {
-        void onClick(int id, String shortDescription, String description, String videoUrl, String thumbnailUrl);
+        //void onClick(int id, String shortDescription, String description, String videoUrl, String thumbnailUrl);
+        void onClick(int id, Bundle bundle);
     }
 
-    public RecipeStepAdapter(ArrayList<Integer> mIds, ArrayList<String> mShortDescriptions, ArrayList<String> mDescriptions, ArrayList<String> mVideoUrls, ArrayList<String> mThumbnailUrls, RecipeStepAdapterOnClickHandler mClickHandler) {
+    public RecipeStepAdapter(ArrayList<Integer> mIds, Bundle bundle, ArrayList<String> mShortDescriptions, RecipeStepAdapterOnClickHandler mClickHandler) {
         this.mIds = mIds;
-        this.mShortDescriptions = mShortDescriptions;
+/*        this.mShortDescriptions = mShortDescriptions;
         this.mDescriptions = mDescriptions;
         this.mVideoUrls = mVideoUrls;
-        this.mThumbnailUrls = mThumbnailUrls;
+        this.mThumbnailUrls = mThumbnailUrls;*/
+        this.bundle = bundle;
+        this.mShortDescriptions = mShortDescriptions;
         this.mClickHandler = mClickHandler;
     }
 
@@ -44,11 +49,12 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             int id = mIds.get(adapterPosition);
-            String shortDescription = mShortDescriptions.get(adapterPosition);
+/*            String shortDescription = mShortDescriptions.get(adapterPosition);
             String description = mDescriptions.get(adapterPosition);
             String videoUrl = mVideoUrls.get(adapterPosition);
-            String thumbnailUrl = mThumbnailUrls.get(adapterPosition);
-            mClickHandler.onClick(id, shortDescription, description, videoUrl, thumbnailUrl);
+            String thumbnailUrl = mThumbnailUrls.get(adapterPosition);*/
+            //Bundle bundle = mBundles.get(adapterPosition);
+            mClickHandler.onClick(id, bundle);
         }
     }
 
