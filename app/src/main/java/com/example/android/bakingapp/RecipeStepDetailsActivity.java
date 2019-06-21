@@ -1,10 +1,12 @@
 package com.example.android.bakingapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 public class RecipeStepDetailsActivity extends AppCompatActivity {
     private Bundle stepsBundle;
     private TextView textView;
+    private SimpleExoPlayer player;
+    private PlayerView playerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +45,8 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         String description = intent.getStringExtra("description");
         String videoUrl = intent.getStringExtra("videoUrl");
         String thumbnailUrl = intent.getStringExtra("thumbnailUrl");
-        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
-                new DefaultRenderersFactory(this),
-                new DefaultTrackSelector(), new DefaultLoadControl());
-        PlayerView playerView = findViewById(R.id.player_view);
-        playerView.setPlayer(player);
+        //SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
+
         if (shortDescription.equals("Recipe Introduction")){
             //textView.setText(shortDescription + "\n\n");
             textView.setText("");
@@ -61,11 +62,31 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         Log.d("nathanTest", thumbnailUrl);
         //String url = steps.get(0).getVideoURL();
         //Uri uri = Uri.parse("https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4");
-        Uri uri = Uri.parse(videoUrl);
-        MediaSource mediaSource = new ExtractorMediaSource.Factory(
-                new DefaultHttpDataSourceFactory("exoplayer-codelab")).
-                createMediaSource(uri);
-        player.prepare(mediaSource, true, false);
-        player.setPlayWhenReady(true);
+
+        playerView = findViewById(R.id.player_view);
+
+        createVideoPlayer(videoUrl);
+    }
+
+    private void createVideoPlayer(String url){
+        if (url.equals("")){
+            //playerView.setVisibility(View.INVISIBLE);
+/*            Bitmap bitmap = new Bitmap()
+            playerView.setDefaultArtwork(R.drawable.ic_launcher_background);
+            playerView.setUseArtwork(true);*/
+            playerView.setVisibility(View.GONE);
+        }
+        else {
+            SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
+                    new DefaultRenderersFactory(this),
+                    new DefaultTrackSelector(), new DefaultLoadControl());
+            playerView.setPlayer(player);
+            Uri uri = Uri.parse(url);
+            MediaSource mediaSource = new ExtractorMediaSource.Factory(
+                    new DefaultHttpDataSourceFactory("exoplayer-codelab")).
+                    createMediaSource(uri);
+            player.prepare(mediaSource, true, false);
+            player.setPlayWhenReady(true);
+        }
     }
 }
