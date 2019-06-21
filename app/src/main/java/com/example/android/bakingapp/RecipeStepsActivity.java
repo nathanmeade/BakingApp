@@ -20,11 +20,13 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
     RecyclerView recyclerView;
     private RecipeStepAdapter recipeStepAdapter;
     private RecipeStepAdapter.RecipeStepAdapterOnClickHandler recipeStepAdapterOnClickHandler;
+    private int totalSteps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_steps);
+        totalSteps = 0;
         ButterKnife.bind(this);
         recipeStepAdapterOnClickHandler = this;
 //        TextView textView = findViewById(R.id.text_view);
@@ -52,6 +54,17 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         startActivity(intent);
     }*/
 
+    //Account for including next and previous steps, if applicable.
+    //The entire Steps bundle should probably be sent to the step details activity, just with a step id as an extra that is passed in the intent.
+    //if condition can then check within the step details activity on whether it should have links to next and previous. This will also be more efficient
+    //for receiving intents and extras for when the next and previous buttons are hit. All that really needs to be passed is the step id.
+    //Proposal:
+    //onClick(int id){
+        //Intent intent = new Intent(this, RecipeStepDetailsActivity.class);
+        //intent.putExtra("id", id);
+        //intent.putExtra("steps", steps);
+        //startActivity(intent);
+    //}
     @Override
     public void onClick(int id, String shortDescription, String description, String videoUrl, String thumbnailUrl) {
         Intent intent = new Intent(this, RecipeStepDetailsActivity.class);
@@ -71,6 +84,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         ArrayList<String> mVideoUrls = new ArrayList<>();
         ArrayList<String> mThumbnailUrls = new ArrayList<>();
         for (Step step : steps ){
+            totalSteps++;
             mIds.add(step.getId());
             mShortDescriptions.add(step.getShortDescription());
             mDescriptions.add(step.getDescription());
