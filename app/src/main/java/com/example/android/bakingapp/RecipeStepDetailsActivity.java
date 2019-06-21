@@ -46,11 +46,18 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
                 new DefaultTrackSelector(), new DefaultLoadControl());
         PlayerView playerView = findViewById(R.id.player_view);
         playerView.setPlayer(player);
-        textView.setText(shortDescription);
+        if (shortDescription.equals("Recipe Introduction")){
+            //textView.setText(shortDescription + "\n\n");
+            textView.setText("");
+        }
+        else {
+            //textView.setText("Step " + id + ": " + shortDescription + "\n\n");
+            textView.setText("Step ");
+        }
         textView.append(description);
-        textView.append(thumbnailUrl);
+        //textView.append(thumbnailUrl);
         //textView.append(toString(id));
-        textView.append(videoUrl);
+        //textView.append(videoUrl);
         Log.d("nathanTest", thumbnailUrl);
         //String url = steps.get(0).getVideoURL();
         //Uri uri = Uri.parse("https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4");

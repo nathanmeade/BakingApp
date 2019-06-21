@@ -18,9 +18,11 @@ public class IngredientsActivity extends AppCompatActivity {
         ingredientsBundle = intent.getBundleExtra("ingredients");
         ArrayList<Ingredient> ingredients = (ArrayList<Ingredient>) ingredientsBundle.getSerializable("ingredients");
         TextView textView = findViewById(R.id.ingredients_text_view);
-        textView.setText("test");
+        textView.setText("");
         for (Ingredient ingredient: ingredients) {
-            textView.append(ingredient.getIngredient());
+            textView.append(ingredient.getQuantity() + " ");
+            textView.append(ingredient.getMeasure() + "\t");
+            textView.append(ingredient.getIngredient() + "\n\n");
         }
     }
 }

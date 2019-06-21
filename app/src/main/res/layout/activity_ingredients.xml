@@ -10,6 +10,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ingredients_text_view"/>
+        android:id="@+id/ingredients_text_view"
+        android:layout_margin="15dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
 </LinearLayout>

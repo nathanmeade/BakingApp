@@ -67,14 +67,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.RecyclerViewAdapterViewHolder recyclerViewAdapterViewHolder, int i) {
-        recyclerViewAdapterViewHolder.textView.setText(mTexts.get(i) + "\n");
-        recyclerViewAdapterViewHolder.textView.append(mIds.get(i).toString());
+        recyclerViewAdapterViewHolder.textView.setText(mTexts.get(i));
+        //recyclerViewAdapterViewHolder.textView.append(mIds.get(i).toString());
     }
 
     @Override
     public int getItemCount() {
-        //return mIds.size();
-        return 4;
+        return mIds.size();
+        //return 4;
     }
 
     public ArrayList<Integer> getmIds() {

@@ -7,14 +7,20 @@
     tools:context=".RecipeStepDetailsActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/steps_text_view"/>
-
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/player_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.google.android.exoplayer2.ui.PlayerView>
+        android:layout_height="wrap_content"></com.google.android.exoplayer2.ui.PlayerView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/steps_text_view"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+
 
 </LinearLayout>

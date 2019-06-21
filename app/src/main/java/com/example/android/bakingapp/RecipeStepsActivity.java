@@ -27,16 +27,16 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         setContentView(R.layout.activity_recipe_steps);
         ButterKnife.bind(this);
         recipeStepAdapterOnClickHandler = this;
-        TextView textView = findViewById(R.id.text_view);
+//        TextView textView = findViewById(R.id.text_view);
         Intent intent = getIntent();
         String id = intent.getStringExtra("text");
         ingredientsBundle = intent.getBundleExtra("ingredients");
         stepsBundle = intent.getBundleExtra("steps");
         ArrayList<Ingredient> ingredients = (ArrayList<Ingredient>) ingredientsBundle.getSerializable("ingredients");
-        textView.setText(id);
+/*        textView.setText(id);
         for (Ingredient ingredient: ingredients) {
             textView.append(ingredient.getIngredient());
-        }
+        }*/
         initializeRecyclerView();
     }
 
@@ -46,11 +46,11 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         startActivity(intent);
     }
 
-    public void stepsIntent(View view){
+/*    public void stepsIntent(View view){
         Intent intent = new Intent(this, RecipeStepDetailsActivity.class);
         intent.putExtra("steps", stepsBundle);
         startActivity(intent);
-    }
+    }*/
 
     @Override
     public void onClick(int id, String shortDescription, String description, String videoUrl, String thumbnailUrl) {

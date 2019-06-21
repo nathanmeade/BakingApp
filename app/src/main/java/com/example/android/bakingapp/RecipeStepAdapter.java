@@ -64,7 +64,13 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RecipeStepAdapter.RecipeStepAdapterViewHolder recipeStepAdapterViewHolder, int i) {
-        recipeStepAdapterViewHolder.textView.setText(mShortDescriptions.get(i) + "\n");
+        if (mShortDescriptions.get(i).equals("Recipe Introduction")){
+            recipeStepAdapterViewHolder.textView.setText(mShortDescriptions.get(i));
+        }
+        else {
+            recipeStepAdapterViewHolder.textView.setText("Step " + mIds.get(i) + ": " + mShortDescriptions.get(i));
+        }
+
         //recipeStepAdapterViewHolder.textView.append(mIds.get(i).toString());
     }
 
