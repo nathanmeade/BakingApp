@@ -54,6 +54,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
     public void ingredientsIntent(View view){
         Intent intent = new Intent(this, IngredientsActivity.class);
         intent.putExtra("ingredients", ingredientsBundle);
+        intent.putExtra("recipe", recipeBundle);
         startActivity(intent);
     }
 

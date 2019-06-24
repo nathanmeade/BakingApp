@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -97,6 +98,17 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
 
         createVideoPlayer(videoUrl);
         nextAndPreviousSteps();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        Intent backIntent = new Intent(this, RecipeStepsActivity.class);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //What to do on back clicked
+                backIntent.putExtra("recipe", recipeBundle);
+                startActivity(backIntent);
+            }
+        });
     }
 
     private void createVideoPlayer(String url){
