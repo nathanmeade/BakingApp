@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -16,6 +17,10 @@ import butterknife.ButterKnife;
 public class RecipeStepsActivity extends AppCompatActivity implements RecipeStepAdapter.RecipeStepAdapterOnClickHandler {
     private Bundle ingredientsBundle;
     private Bundle stepsBundle;
+    private Bundle recipeBundle;
+    private Recipe recipe;
+    private ArrayList<Step> steps;
+    private ArrayList<Ingredient> ingredients;
     @BindView(R.id.steps_recycler_view)
     RecyclerView recyclerView;
     private RecipeStepAdapter recipeStepAdapter;
@@ -27,9 +32,22 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         setContentView(R.layout.activity_recipe_steps);
         ButterKnife.bind(this);
         recipeStepAdapterOnClickHandler = this;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Intent intent = getIntent();
-        ingredientsBundle = intent.getBundleExtra("ingredients");
-        stepsBundle = intent.getBundleExtra("steps");
+/*        ingredientsBundle = intent.getBundleExtra("ingredients");
+        stepsBundle = intent.getBundleExtra("steps");*/
+        recipeBundle = intent.getBundleExtra("recipe");
+        recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        ingredients = recipe.getIngredients();
+        steps = recipe.getSteps();
+        ingredientsBundle = new Bundle();
+        stepsBundle = new Bundle();
+        ingredientsBundle.putSerializable("ingredients", (Serializable) ingredients);
+        stepsBundle.putSerializable("steps", steps);
         initializeRecyclerView();
     }
 
@@ -64,6 +82,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
 
     public void initializeRecyclerView(){
         ArrayList<Step> steps = (ArrayList<Step>) stepsBundle.getSerializable("steps");
+        //ArrayList<Step> steps = recipe.getSteps();
         ArrayList<Integer> mIds = new ArrayList<>();
         ArrayList<String> mShortDescriptions = new ArrayList<>();
         ArrayList<String> mDescriptions = new ArrayList<>();

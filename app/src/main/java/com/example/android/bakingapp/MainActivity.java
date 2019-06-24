@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                ArrayList<Recipe> mRecipes = new ArrayList<>();
                 ArrayList<Integer> mIds = new ArrayList<>();
                 ArrayList<String> mTexts = new ArrayList<>();
                 ArrayList<Long> mServings = new ArrayList<>();
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 }
                 List<Recipe> recipes = response.body();
                 for (Recipe recipe : recipes) {
+                    mRecipes.add(recipe);
                     mIds.add(recipe.getId());
                     mTexts.add(recipe.getText());
                     mServings.add(recipe.getServings());
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                     ArrayList<Step> steps = recipe.getSteps();
                     mSteps.add(steps);
                 }
-                recyclerViewAdapter = new RecyclerViewAdapter(mIds, mTexts, mServings, mImages, mIngredients, mSteps, clickHandler);
+                recyclerViewAdapter = new RecyclerViewAdapter(mRecipes, mIds, mTexts, mServings, mImages, mIngredients, mSteps, clickHandler);
                 recyclerView.setAdapter(recyclerViewAdapter);
             }
             @Override
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     @Override
-    public void onClick(int id, String text, Long serving, String image, ArrayList<Ingredient> ingredients, ArrayList<Step> steps) {
+    public void onClick(Recipe recipe, int id, String text, Long serving, String image, ArrayList<Ingredient> ingredients, ArrayList<Step> steps) {
         Intent intent = new Intent(this, RecipeStepsActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("text", text);
@@ -86,10 +88,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         //how to put extra for arraylists?
         Bundle ingredientsBundle = new Bundle();
         Bundle stepsBundle = new Bundle();
+        Bundle recipeBundle = new Bundle();
         ingredientsBundle.putSerializable("ingredients", (Serializable) ingredients);
         stepsBundle.putSerializable("steps", steps);
+        recipeBundle.putSerializable("recipe", (Serializable) recipe);
         intent.putExtra("ingredients", ingredientsBundle);
         intent.putExtra("steps", stepsBundle);
+        intent.putExtra("recipe", recipeBundle);
         startActivity(intent);
     }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewAdapterViewHolder> {
+    private ArrayList<Recipe> mRecipes;
     private ArrayList<Integer> mIds;
     private ArrayList<String> mTexts;
     private ArrayList<Long> mServings;
@@ -20,10 +21,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private final RecyclerViewAdapterOnClickHandler mClickHandler;
 
     public interface RecyclerViewAdapterOnClickHandler {
-        void onClick(int id, String text, Long serving, String image, ArrayList<Ingredient> ingredients, ArrayList<Step> steps);
+        void onClick(Recipe recipe, int id, String text, Long serving, String image, ArrayList<Ingredient> ingredients, ArrayList<Step> steps);
     }
 
-    public RecyclerViewAdapter(ArrayList<Integer> mIds, ArrayList<String> mTexts, ArrayList<Long> mServings, ArrayList<String> mImages, ArrayList<ArrayList<Ingredient>> mIngredients, ArrayList<ArrayList<Step>> mSteps, RecyclerViewAdapterOnClickHandler mClickHandler) {
+    public RecyclerViewAdapter(ArrayList<Recipe> mRecipes, ArrayList<Integer> mIds, ArrayList<String> mTexts, ArrayList<Long> mServings, ArrayList<String> mImages, ArrayList<ArrayList<Ingredient>> mIngredients, ArrayList<ArrayList<Step>> mSteps, RecyclerViewAdapterOnClickHandler mClickHandler) {
+        this.mRecipes = mRecipes;
         this.mIds = mIds;
         this.mTexts = mTexts;
         this.mServings = mServings;
@@ -45,13 +47,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
+            Recipe recipe = mRecipes.get(adapterPosition);
             int id = mIds.get(adapterPosition);
             String text = mTexts.get(adapterPosition);
             Long serving = mServings.get(adapterPosition);
             String image = mImages.get(adapterPosition);
             ArrayList<Ingredient> ingredients = mIngredients.get(adapterPosition);
             ArrayList<Step> steps = mSteps.get(adapterPosition);
-            mClickHandler.onClick(id, text, serving, image, ingredients, steps);
+            mClickHandler.onClick(recipe, id, text, serving, image, ingredients, steps);
         }
     }
 
@@ -75,6 +78,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return mIds.size();
         //return 4;
+    }
+
+    public ArrayList<Recipe> getmRecipes() {
+        return mRecipes;
     }
 
     public ArrayList<Integer> getmIds() {
