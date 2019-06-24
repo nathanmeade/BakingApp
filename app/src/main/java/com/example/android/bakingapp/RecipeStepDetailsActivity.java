@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class RecipeStepDetailsActivity extends AppCompatActivity {
     private Bundle stepsBundle;
+    private Bundle recipeBundle;
     private TextView textView;
     private SimpleExoPlayer player;
     private PlayerView playerView;
@@ -52,6 +53,7 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         textView = findViewById(R.id.steps_text_view);
         id = intent.getIntExtra("id", 0);
         stepsBundle = intent.getBundleExtra("steps");
+        recipeBundle = intent.getBundleExtra("recipe");
 
         ArrayList<Step> steps = (ArrayList<Step>) stepsBundle.getSerializable("steps");
         //ArrayList<Integer> mIds = new ArrayList<>();
@@ -152,6 +154,12 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         if (nextButtonBoolean) {
             stepIntent((id+1));
         }
+    }
+
+    public void backArrow(View view){
+        Intent intent = new Intent(this, RecipeStepsActivity.class);
+        intent.putExtra("recipe", recipeBundle);
+        startActivity(intent);
     }
 
     //private void setPreviousButton(Boolean exists, )

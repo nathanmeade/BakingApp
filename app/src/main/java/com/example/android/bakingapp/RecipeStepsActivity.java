@@ -77,6 +77,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         intent.putExtra("videoUrl", videoUrl);
         intent.putExtra("thumbnailUrl", thumbnailUrl);*/
         intent.putExtra("steps", stepsBundle);
+        intent.putExtra("recipe", recipeBundle);
         startActivity(intent);
     }
 
