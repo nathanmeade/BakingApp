@@ -53,6 +53,8 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         }*/
         textView = findViewById(R.id.steps_text_view);
         id = intent.getIntExtra("id", 0);
+        Bundle idBundle = new Bundle();
+        idBundle.putInt("id", id);
         stepsBundle = intent.getBundleExtra("steps");
         recipeBundle = intent.getBundleExtra("recipe");
 
@@ -77,7 +79,7 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         //String thumbnailUrl = intent.getStringExtra("thumbnailUrl");
         //SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
 
-        if (shortDescription.equals("Recipe Introduction")){
+/*        if (shortDescription.equals("Recipe Introduction")){
             //textView.setText(shortDescription + "\n\n");
             textView.setText("");
         }
@@ -86,7 +88,7 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
             textView.setText("Step ");
         }
         //textView.append();
-        textView.append(description);
+        textView.append(description);*/
         //textView.append(thumbnailUrl);
         //textView.append(toString(id));
         //textView.append(videoUrl);
@@ -96,7 +98,7 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
 
         playerView = findViewById(R.id.player_view);
 
-        createVideoPlayer(videoUrl);
+        //createVideoPlayer(videoUrl);
         nextAndPreviousSteps();
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         Intent backIntent = new Intent(this, RecipeStepsActivity.class);
@@ -109,14 +111,27 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
                 startActivity(backIntent);
             }
         });
+        StepDetailsFragment fragobj = new StepDetailsFragment();
+        /*StepDetailsFragment fragobj = findViewById(R.id.step_details_fragment_tag);*/
+/*        fragobj.setArguments(idBundle);
+        fragobj.setArguments(stepsBundle);
+        fragobj.setArguments(recipeBundle);*/
+/*        Transaction transaction.replace(R.id.fragment_single, fragInfo);
+        transaction.commit();*/
+        fragobj.setIdBundle(idBundle);
+        fragobj.setStepsBundle(stepsBundle);
+        fragobj.setRecipeBundle(recipeBundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.step_details_fragment_tag, fragobj)
+                .commit();
     }
 
-    private void createVideoPlayer(String url){
+/*    private void createVideoPlayer(String url){
         if (url.equals("")){
             //playerView.setVisibility(View.INVISIBLE);
-/*            Bitmap bitmap = new Bitmap()
+*//*            Bitmap bitmap = new Bitmap()
             playerView.setDefaultArtwork(R.drawable.ic_launcher_background);
-            playerView.setUseArtwork(true);*/
+            playerView.setUseArtwork(true);*//*
             playerView.setVisibility(View.GONE);
         }
         else {
@@ -131,7 +146,7 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
             player.prepare(mediaSource, true, false);
             player.setPlayWhenReady(true);
         }
-    }
+    }*/
 
     private void nextAndPreviousSteps(){
         //if ((id > 0)&& id<(size-1)) {
