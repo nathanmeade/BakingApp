@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Baking App</string>
-    <string name="base_url">https://d17h27t6h515a5.cloudfront.net/</string>
-    <string name="path_url">topher/2017/May/59121517_baking/baking.json</string>
+    <string name="base_url" translatable="false">https://d17h27t6h515a5.cloudfront.net/</string>
+    <string name="path_url" translatable="false">topher/2017/May/59121517_baking/baking.json</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="navigate_back_button_string" translatable="false">Navigate back button</string>
 </resources>
