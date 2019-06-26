@@ -28,8 +28,13 @@ public class RecipeStepsActivity extends AppCompatActivity {
         Bundle idBundle = new Bundle();
         idBundle.putInt("id", 0);
         if (findViewById(R.id.tablet_layout)!=null){
-            StepDetailsFragment fragobj = new StepDetailsFragment();
+/*            StepDetailsFragment fragobj = new StepDetailsFragment();
             fragobj.setIdBundle(idBundle);
+            fragobj.setRecipeBundle(recipeBundle);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.step_details_fragment_tag, fragobj)
+                    .commit();*/
+            IngredientsFragment fragobj = new IngredientsFragment();
             fragobj.setRecipeBundle(recipeBundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.step_details_fragment_tag, fragobj)

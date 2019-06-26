@@ -18,8 +18,11 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepAdapter.R
     RecyclerView recyclerView;
     private RecipeStepAdapter recipeStepAdapter;
     private RecipeStepAdapter.RecipeStepAdapterOnClickHandler recipeStepAdapterOnClickHandler;
+    private boolean isTablet;
 
     private OnFragmentInteractionListener mListener;
+
+    //public interface On
 
     public RecipeStepsFragment() {
         // Required empty public constructor
@@ -44,9 +47,16 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepAdapter.R
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ingredientsIntent();
+                if (isTablet){
+                    //need to change:
+                    ingredientsIntent();
+                }
+                else {
+                    ingredientsIntent();
+                }
             }
         });
+
         return rootView;
     }
 
@@ -96,5 +106,9 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepAdapter.R
 
     public void setRecipeBundle(Bundle bundle){
         recipeBundle = bundle;
+    }
+
+    public void setIsTablet(boolean b){
+        isTablet = b;
     }
 }

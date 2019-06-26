@@ -16,14 +16,10 @@ public class IngredientsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ingredients);
         Intent intent = getIntent();
         recipeBundle = intent.getBundleExtra("recipe");
-        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
-        ArrayList<Ingredient> ingredients = recipe.getIngredients();
-        TextView textView = findViewById(R.id.ingredients_text_view);
-        textView.setText("");
-        for (Ingredient ingredient: ingredients) {
-            textView.append(ingredient.getQuantity() + " ");
-            textView.append(ingredient.getMeasure() + "\t");
-            textView.append(ingredient.getIngredient() + "\n\n");
-        }
+        IngredientsFragment fragobj = new IngredientsFragment();
+        fragobj.setRecipeBundle(recipeBundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.ingredients_fragment_tag, fragobj)
+                .commit();
     }
 }
