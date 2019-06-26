@@ -3,6 +3,7 @@ package com.example.android.bakingapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -32,8 +33,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         clickHandler = this;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        if (findViewById(R.id.tablet_layout)!=null){
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }
+        else {
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
         getJsonParsed();
     }
 
