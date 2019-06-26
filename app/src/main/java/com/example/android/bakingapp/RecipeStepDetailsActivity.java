@@ -1,25 +1,15 @@
 package com.example.android.bakingapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.DefaultRenderersFactory;
-import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import java.util.ArrayList;
 
@@ -44,13 +34,6 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         previousButton = findViewById(R.id.previous_button);
         nextButton = findViewById(R.id.next_button);
-/*        stepsBundle = intent.getBundleExtra("steps");
-        ArrayList<Step> steps = (ArrayList<Step>) stepsBundle.getSerializable("steps");
-        TextView textView = findViewById(R.id.steps_text_view);
-        textView.setText("test");
-        for (Step step: steps) {
-            textView.append(step.getShortDescription());
-        }*/
         textView = findViewById(R.id.steps_text_view);
         id = intent.getIntExtra("id", 0);
         Bundle idBundle = new Bundle();
@@ -59,46 +42,19 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         recipeBundle = intent.getBundleExtra("recipe");
 
         ArrayList<Step> steps = (ArrayList<Step>) stepsBundle.getSerializable("steps");
-        //ArrayList<Integer> mIds = new ArrayList<>();
         ArrayList<String> mShortDescriptions = new ArrayList<>();
         size = steps.size();
         ArrayList<String> mDescriptions = new ArrayList<>();
         ArrayList<String> mVideoUrls = new ArrayList<>();
-        //ArrayList<String> mThumbnailUrls = new ArrayList<>();
         for (Step step : steps ){
-            //mIds.add(step.getId());
             mShortDescriptions.add(step.getShortDescription());
             mDescriptions.add(step.getDescription());
             mVideoUrls.add(step.getVideoURL());
-            //mThumbnailUrls.add(step.getThumbnailURL());
         }
-
         String shortDescription = mShortDescriptions.get(id);
         String description = mDescriptions.get(id);
         String videoUrl = mVideoUrls.get(id);
-        //String thumbnailUrl = intent.getStringExtra("thumbnailUrl");
-        //SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
-
-/*        if (shortDescription.equals("Recipe Introduction")){
-            //textView.setText(shortDescription + "\n\n");
-            textView.setText("");
-        }
-        else {
-            //textView.setText("Step " + id + ": " + shortDescription + "\n\n");
-            textView.setText("Step ");
-        }
-        //textView.append();
-        textView.append(description);*/
-        //textView.append(thumbnailUrl);
-        //textView.append(toString(id));
-        //textView.append(videoUrl);
-        //Log.d("nathanTest", thumbnailUrl);
-        //String url = steps.get(0).getVideoURL();
-        //Uri uri = Uri.parse("https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4");
-
         playerView = findViewById(R.id.player_view);
-
-        //createVideoPlayer(videoUrl);
         nextAndPreviousSteps();
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         Intent backIntent = new Intent(this, RecipeStepsActivity.class);
@@ -112,44 +68,14 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
             }
         });
         StepDetailsFragment fragobj = new StepDetailsFragment();
-        /*StepDetailsFragment fragobj = findViewById(R.id.step_details_fragment_tag);*/
-/*        fragobj.setArguments(idBundle);
-        fragobj.setArguments(stepsBundle);
-        fragobj.setArguments(recipeBundle);*/
-/*        Transaction transaction.replace(R.id.fragment_single, fragInfo);
-        transaction.commit();*/
         fragobj.setIdBundle(idBundle);
         fragobj.setStepsBundle(stepsBundle);
-        fragobj.setRecipeBundle(recipeBundle);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.step_details_fragment_tag, fragobj)
                 .commit();
     }
 
-/*    private void createVideoPlayer(String url){
-        if (url.equals("")){
-            //playerView.setVisibility(View.INVISIBLE);
-*//*            Bitmap bitmap = new Bitmap()
-            playerView.setDefaultArtwork(R.drawable.ic_launcher_background);
-            playerView.setUseArtwork(true);*//*
-            playerView.setVisibility(View.GONE);
-        }
-        else {
-            SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
-                    new DefaultRenderersFactory(this),
-                    new DefaultTrackSelector(), new DefaultLoadControl());
-            playerView.setPlayer(player);
-            Uri uri = Uri.parse(url);
-            MediaSource mediaSource = new ExtractorMediaSource.Factory(
-                    new DefaultHttpDataSourceFactory("exoplayer-codelab")).
-                    createMediaSource(uri);
-            player.prepare(mediaSource, true, false);
-            player.setPlayWhenReady(true);
-        }
-    }*/
-
     private void nextAndPreviousSteps(){
-        //if ((id > 0)&& id<(size-1)) {
         if ((id > 0)&& id<(size - 1)) {
             //previous step true
             previousButtonBoolean = true;
@@ -183,18 +109,11 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public void backArrow(View view){
-        Intent intent = new Intent(this, RecipeStepsActivity.class);
-        intent.putExtra("recipe", recipeBundle);
-        startActivity(intent);
-    }
-
-    //private void setPreviousButton(Boolean exists, )
-
     private void stepIntent(int step){
         intent = new Intent(this, RecipeStepDetailsActivity.class);
         intent.putExtra("id", step);
         intent.putExtra("steps", stepsBundle);
+        intent.putExtra("recipe", recipeBundle);
         startActivity(intent);
     }
 }

@@ -16,12 +16,6 @@
         android:background="?attr/colorPrimary">
     </android.support.v7.widget.Toolbar>
 
-<!--    <fragment
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:name="com.example.android.bakingapp.StepDetailsFragment"
-        android:id="@+id/step_details_fragment_tag"/>-->
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,14 +34,5 @@
         android:id="@+id/next_button"
         android:onClick="nextButton"
         android:text="Next"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/back_arrow"
-        android:onClick="backArrow"
-        android:text="Back Arrow"/>
-
-
 
 </LinearLayout>
