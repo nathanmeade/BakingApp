@@ -6,19 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.ui.PlayerView;
 
 import java.util.ArrayList;
 
 public class RecipeStepDetailsActivity extends AppCompatActivity {
-    private Bundle stepsBundle;
     private Bundle recipeBundle;
-    private TextView textView;
-    private SimpleExoPlayer player;
-    private PlayerView playerView;
     private Button previousButton;
     private Button nextButton;
     private Intent intent;
@@ -34,29 +26,15 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         previousButton = findViewById(R.id.previous_button);
         nextButton = findViewById(R.id.next_button);
-        textView = findViewById(R.id.steps_text_view);
         id = intent.getIntExtra("id", 0);
         Bundle idBundle = new Bundle();
         idBundle.putInt("id", id);
-        stepsBundle = intent.getBundleExtra("steps");
         recipeBundle = intent.getBundleExtra("recipe");
-
-        ArrayList<Step> steps = (ArrayList<Step>) stepsBundle.getSerializable("steps");
-        ArrayList<String> mShortDescriptions = new ArrayList<>();
+        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        ArrayList<Step> steps = recipe.getSteps();
         size = steps.size();
-        ArrayList<String> mDescriptions = new ArrayList<>();
-        ArrayList<String> mVideoUrls = new ArrayList<>();
-        for (Step step : steps ){
-            mShortDescriptions.add(step.getShortDescription());
-            mDescriptions.add(step.getDescription());
-            mVideoUrls.add(step.getVideoURL());
-        }
-        String shortDescription = mShortDescriptions.get(id);
-        String description = mDescriptions.get(id);
-        String videoUrl = mVideoUrls.get(id);
-        playerView = findViewById(R.id.player_view);
         nextAndPreviousSteps();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        Toolbar toolbar = findViewById(R.id.my_awesome_toolbar);
         Intent backIntent = new Intent(this, RecipeStepsActivity.class);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -69,7 +47,7 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         });
         StepDetailsFragment fragobj = new StepDetailsFragment();
         fragobj.setIdBundle(idBundle);
-        fragobj.setStepsBundle(stepsBundle);
+        fragobj.setRecipeBundle(recipeBundle);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.step_details_fragment_tag, fragobj)
                 .commit();
@@ -112,7 +90,6 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
     private void stepIntent(int step){
         intent = new Intent(this, RecipeStepDetailsActivity.class);
         intent.putExtra("id", step);
-        intent.putExtra("steps", stepsBundle);
         intent.putExtra("recipe", recipeBundle);
         startActivity(intent);
     }

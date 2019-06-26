@@ -1,7 +1,6 @@
 package com.example.android.bakingapp;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,16 +13,14 @@ import java.util.ArrayList;
 public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.RecipeStepAdapterViewHolder> {
     private ArrayList<Integer> mIds;
     private ArrayList<String> mShortDescriptions;
-    private Bundle bundle;
     private final RecipeStepAdapterOnClickHandler mClickHandler;
 
     public interface RecipeStepAdapterOnClickHandler {
-        void onClick(int id, Bundle bundle);
+        void onClick(int id);
     }
 
-    public RecipeStepAdapter(ArrayList<Integer> mIds, Bundle bundle, ArrayList<String> mShortDescriptions, RecipeStepAdapterOnClickHandler mClickHandler) {
+    public RecipeStepAdapter(ArrayList<Integer> mIds, ArrayList<String> mShortDescriptions, RecipeStepAdapterOnClickHandler mClickHandler) {
         this.mIds = mIds;
-        this.bundle = bundle;
         this.mShortDescriptions = mShortDescriptions;
         this.mClickHandler = mClickHandler;
     }
@@ -41,7 +38,7 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             int id = mIds.get(adapterPosition);
-            mClickHandler.onClick(id, bundle);
+            mClickHandler.onClick(id);
         }
     }
 

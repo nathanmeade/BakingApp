@@ -14,12 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecipeStepsActivity extends AppCompatActivity implements RecipeStepAdapter.RecipeStepAdapterOnClickHandler {
-    private Bundle ingredientsBundle;
-    private Bundle stepsBundle;
     private Bundle recipeBundle;
-    private Recipe recipe;
-    private ArrayList<Step> steps;
-    private ArrayList<Ingredient> ingredients;
     @BindView(R.id.steps_recycler_view)
     RecyclerView recyclerView;
     private RecipeStepAdapter recipeStepAdapter;
@@ -38,49 +33,35 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         super.onResume();
         Intent intent = getIntent();
         recipeBundle = intent.getBundleExtra("recipe");
-        recipe = (Recipe) recipeBundle.getSerializable("recipe");
-        ingredients = recipe.getIngredients();
-        steps = recipe.getSteps();
-        ingredientsBundle = new Bundle();
-        stepsBundle = new Bundle();
-        ingredientsBundle.putSerializable("ingredients", (Serializable) ingredients);
-        stepsBundle.putSerializable("steps", steps);
         initializeRecyclerView();
     }
 
     public void ingredientsIntent(View view){
         Intent intent = new Intent(this, IngredientsActivity.class);
-        intent.putExtra("ingredients", ingredientsBundle);
         intent.putExtra("recipe", recipeBundle);
         startActivity(intent);
     }
 
     @Override
-    public void onClick(int id, Bundle bundle) {
+    public void onClick(int id) {
         Intent intent = new Intent(this, RecipeStepDetailsActivity.class);
         intent.putExtra("id", id);
-        intent.putExtra("steps", stepsBundle);
         intent.putExtra("recipe", recipeBundle);
         startActivity(intent);
     }
 
     public void initializeRecyclerView(){
-        ArrayList<Step> steps = (ArrayList<Step>) stepsBundle.getSerializable("steps");
-        ArrayList<Integer> mIds = new ArrayList<>();
+        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        ArrayList<Step> steps = recipe.getSteps();
+                ArrayList<Integer> mIds = new ArrayList<>();
         ArrayList<String> mShortDescriptions = new ArrayList<>();
-        ArrayList<String> mDescriptions = new ArrayList<>();
-        ArrayList<String> mVideoUrls = new ArrayList<>();
-        ArrayList<String> mThumbnailUrls = new ArrayList<>();
         for (Step step : steps ){
             mIds.add(step.getId());
             mShortDescriptions.add(step.getShortDescription());
-            mDescriptions.add(step.getDescription());
-            mVideoUrls.add(step.getVideoURL());
-            mThumbnailUrls.add(step.getThumbnailURL());
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recipeStepAdapter = new RecipeStepAdapter(mIds, stepsBundle, mShortDescriptions, recipeStepAdapterOnClickHandler);
+        recipeStepAdapter = new RecipeStepAdapter(mIds, mShortDescriptions, recipeStepAdapterOnClickHandler);
         recyclerView.setAdapter(recipeStepAdapter);
     }
 }

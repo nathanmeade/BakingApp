@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class StepDetailsFragment extends Fragment {
 
-    private Bundle stepsBundle;
+    private Bundle recipeBundle;
     private Bundle idBundle;
     private TextView textView;
     private PlayerView playerView;
@@ -39,18 +39,12 @@ public class StepDetailsFragment extends Fragment {
         textView = rootView.findViewById(R.id.steps_text_view);
         playerView = rootView.findViewById(R.id.player_view);
         id = idBundle.getInt("id");
-        ArrayList<Step> steps = (ArrayList<Step>) stepsBundle.getSerializable("steps");
-        ArrayList<String> mShortDescriptions = new ArrayList<>();
-        ArrayList<String> mDescriptions = new ArrayList<>();
-        ArrayList<String> mVideoUrls = new ArrayList<>();
-        for (Step step : steps ){
-            mShortDescriptions.add(step.getShortDescription());
-            mDescriptions.add(step.getDescription());
-            mVideoUrls.add(step.getVideoURL());
-        }
-        String shortDescription = mShortDescriptions.get(id);
-        String description = mDescriptions.get(id);
-        String videoUrl = mVideoUrls.get(id);
+        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        ArrayList<Step> steps = recipe.getSteps();
+        Step step = steps.get(id);
+        String shortDescription = step.getShortDescription();
+        String description = step.getDescription();
+        String videoUrl = step.getVideoURL();
         if (shortDescription.equals("Recipe Introduction")){
             textView.setText("");
         }
@@ -99,7 +93,7 @@ public class StepDetailsFragment extends Fragment {
         idBundle = bundle;
     }
 
-    public void setStepsBundle(Bundle bundle){
-        stepsBundle = bundle;
+    public void setRecipeBundle(Bundle bundle){
+        recipeBundle = bundle;
     }
 }
