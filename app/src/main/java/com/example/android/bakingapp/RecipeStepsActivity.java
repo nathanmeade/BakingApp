@@ -18,6 +18,7 @@ public class RecipeStepsActivity extends AppCompatActivity {
     private Bundle recipeBundle;
     private RecipeStepAdapter recipeStepAdapter;
     private RecipeStepAdapter.RecipeStepAdapterOnClickHandler recipeStepAdapterOnClickHandler;
+    private boolean isTablet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,18 +28,19 @@ public class RecipeStepsActivity extends AppCompatActivity {
         recipeBundle = intent.getBundleExtra("recipe");
         Bundle idBundle = new Bundle();
         idBundle.putInt("id", 0);
-        if (findViewById(R.id.tablet_layout)!=null){
-/*            StepDetailsFragment fragobj = new StepDetailsFragment();
+        isTablet = (findViewById(R.id.tablet_layout)!=null);
+        if (isTablet){
+            StepDetailsFragment fragobj = new StepDetailsFragment();
             fragobj.setIdBundle(idBundle);
             fragobj.setRecipeBundle(recipeBundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.step_details_fragment_tag, fragobj)
-                    .commit();*/
-            IngredientsFragment fragobj = new IngredientsFragment();
+                    .commit();
+/*            IngredientsFragment fragobj = new IngredientsFragment();
             fragobj.setRecipeBundle(recipeBundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.step_details_fragment_tag, fragobj)
-                    .commit();
+                    .commit();*/
         }
         //recipeStepAdapterOnClickHandler = this;
     }
@@ -56,6 +58,7 @@ public class RecipeStepsActivity extends AppCompatActivity {
     private void createFragment(){
         RecipeStepsFragment fragobj = new RecipeStepsFragment();
         fragobj.setRecipeBundle(recipeBundle);
+        fragobj.setIsTablet(isTablet);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.recipe_steps_activity_fragment_tag, fragobj)
                 .commit();

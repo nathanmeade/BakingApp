@@ -49,7 +49,11 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepAdapter.R
             public void onClick(View v) {
                 if (isTablet){
                     //need to change:
-                    ingredientsIntent();
+                    IngredientsFragment fragobj = new IngredientsFragment();
+                    fragobj.setRecipeBundle(recipeBundle);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.step_details_fragment_tag, fragobj)
+                            .commit();
                 }
                 else {
                     ingredientsIntent();
@@ -83,10 +87,22 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepAdapter.R
 
     @Override
     public void onClick(int id) {
-        Intent intent = new Intent(getContext(), RecipeStepDetailsActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("recipe", recipeBundle);
-        startActivity(intent);
+        if (isTablet){
+            StepDetailsFragment fragobj = new StepDetailsFragment();
+            Bundle idBundle = new Bundle();
+            idBundle.putInt("id", id);
+            fragobj.setIdBundle(idBundle);
+            fragobj.setRecipeBundle(recipeBundle);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.step_details_fragment_tag, fragobj)
+                    .commit();
+        }
+        else {
+            Intent intent = new Intent(getContext(), RecipeStepDetailsActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("recipe", recipeBundle);
+            startActivity(intent);
+        }
     }
 
     public void initializeRecyclerView(){
