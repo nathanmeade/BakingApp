@@ -5,17 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecipeStepsActivity"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:id="@+id/tablet_layout">
 
-    <FrameLayout
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:id="@+id/recipe_steps_activity_fragment_tag"></FrameLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_awesome_toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/step_details_fragment_tag"></FrameLayout>
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:id="@+id/recipe_steps_activity_fragment_tag"></FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/step_details_fragment_tag"></FrameLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
