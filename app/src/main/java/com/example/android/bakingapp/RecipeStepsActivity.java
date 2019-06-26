@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,7 +23,18 @@ public class RecipeStepsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_steps);
-
+        Intent intent = getIntent();
+        recipeBundle = intent.getBundleExtra("recipe");
+        Bundle idBundle = new Bundle();
+        idBundle.putInt("id", 0);
+        if (findViewById(R.id.tablet_layout)!=null){
+            StepDetailsFragment fragobj = new StepDetailsFragment();
+            fragobj.setIdBundle(idBundle);
+            fragobj.setRecipeBundle(recipeBundle);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.step_details_fragment_tag, fragobj)
+                    .commit();
+        }
         //recipeStepAdapterOnClickHandler = this;
     }
 

@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecipeStepsActivity"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:id="@+id/tablet_layout">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="test"/>
+    <FrameLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:id="@+id/recipe_steps_activity_fragment_tag"></FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recipe_steps_activity_fragment_tag"></FrameLayout>
+        android:id="@+id/step_details_fragment_tag"></FrameLayout>
 
 </LinearLayout>
