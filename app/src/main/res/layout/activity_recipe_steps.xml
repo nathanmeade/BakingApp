@@ -7,57 +7,9 @@
     tools:context=".RecipeStepsActivity"
     android:orientation="vertical">
 
-<!--    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_view"/>-->
-
-<!--    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="ingredientsIntent"/>-->
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="@drawable/border"
-        android:layout_margin="30dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/ingredients_intent"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="Recipe Ingredients"
-            tools:text="test"
-            android:onClick="ingredientsIntent"/>
-
-    </LinearLayout>
-
-<!--    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="stepsIntent"/>-->
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/steps_recycler_view">
-
-        </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+        android:id="@+id/recipe_steps_activity_fragment_tag"></FrameLayout>
 
 </LinearLayout>

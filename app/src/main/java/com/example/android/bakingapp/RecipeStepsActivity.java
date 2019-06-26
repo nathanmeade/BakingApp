@@ -13,10 +13,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeStepsActivity extends AppCompatActivity implements RecipeStepAdapter.RecipeStepAdapterOnClickHandler {
+public class RecipeStepsActivity extends AppCompatActivity {
     private Bundle recipeBundle;
-    @BindView(R.id.steps_recycler_view)
-    RecyclerView recyclerView;
     private RecipeStepAdapter recipeStepAdapter;
     private RecipeStepAdapter.RecipeStepAdapterOnClickHandler recipeStepAdapterOnClickHandler;
 
@@ -24,8 +22,8 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_steps);
-        ButterKnife.bind(this);
-        recipeStepAdapterOnClickHandler = this;
+
+        //recipeStepAdapterOnClickHandler = this;
     }
 
     @Override
@@ -33,35 +31,16 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         super.onResume();
         Intent intent = getIntent();
         recipeBundle = intent.getBundleExtra("recipe");
-        initializeRecyclerView();
+        //should be create fragment instead
+        createFragment();
+        //initializeRecyclerView();
     }
 
-    public void ingredientsIntent(View view){
-        Intent intent = new Intent(this, IngredientsActivity.class);
-        intent.putExtra("recipe", recipeBundle);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onClick(int id) {
-        Intent intent = new Intent(this, RecipeStepDetailsActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("recipe", recipeBundle);
-        startActivity(intent);
-    }
-
-    public void initializeRecyclerView(){
-        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
-        ArrayList<Step> steps = recipe.getSteps();
-                ArrayList<Integer> mIds = new ArrayList<>();
-        ArrayList<String> mShortDescriptions = new ArrayList<>();
-        for (Step step : steps ){
-            mIds.add(step.getId());
-            mShortDescriptions.add(step.getShortDescription());
-        }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recipeStepAdapter = new RecipeStepAdapter(mIds, mShortDescriptions, recipeStepAdapterOnClickHandler);
-        recyclerView.setAdapter(recipeStepAdapter);
+    private void createFragment(){
+        RecipeStepsFragment fragobj = new RecipeStepsFragment();
+        fragobj.setRecipeBundle(recipeBundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.recipe_steps_activity_fragment_tag, fragobj)
+                .commit();
     }
 }
