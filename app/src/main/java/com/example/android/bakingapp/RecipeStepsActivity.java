@@ -1,5 +1,7 @@
 package com.example.android.bakingapp;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,6 +66,7 @@ public class RecipeStepsActivity extends AppCompatActivity {
         recipeBundle = intent.getBundleExtra("recipe");
         //should be create fragment instead
         if(recipeBundle!=null){
+            updateWidget();
             createFragment();
         }
 
@@ -77,5 +80,22 @@ public class RecipeStepsActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.recipe_steps_activity_fragment_tag, fragobj)
                 .commit();
+    }
+
+    public void updateWidget(){
+/*        Intent intent = new Intent(this, ExampleAppWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+// Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+// since it seems the onUpdate() is only fired on that:
+        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), ExampleAppWidgetProvider.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        sendBroadcast(intent);*/
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplication());
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(getApplication(), ExampleAppWidgetProvider.class));
+        //Now update all widgets
+        String string = "macewindu";
+        //string = editTextBox.getText().toString();
+        ExampleAppWidgetProvider.updatePlantWidgets(getApplication(), appWidgetManager, appWidgetIds, string);
     }
 }
