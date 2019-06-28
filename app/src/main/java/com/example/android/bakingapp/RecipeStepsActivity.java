@@ -63,7 +63,10 @@ public class RecipeStepsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         recipeBundle = intent.getBundleExtra("recipe");
         //should be create fragment instead
-        createFragment();
+        if(recipeBundle!=null){
+            createFragment();
+        }
+
         //initializeRecyclerView();
     }
 
