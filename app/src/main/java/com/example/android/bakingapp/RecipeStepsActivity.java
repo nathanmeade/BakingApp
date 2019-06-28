@@ -66,7 +66,7 @@ public class RecipeStepsActivity extends AppCompatActivity {
         recipeBundle = intent.getBundleExtra("recipe");
         //should be create fragment instead
         if(recipeBundle!=null){
-            updateWidget();
+            updateWidget(recipeBundle);
             createFragment();
         }
 
@@ -82,7 +82,7 @@ public class RecipeStepsActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void updateWidget(){
+    public void updateWidget(Bundle bundle){
 /*        Intent intent = new Intent(this, ExampleAppWidgetProvider.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -91,11 +91,24 @@ public class RecipeStepsActivity extends AppCompatActivity {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         sendBroadcast(intent);*/
 
+        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        ArrayList<Ingredient> ingredients = recipe.getIngredients();
+/*        TextView textView = rootView.findViewById(R.id.ingredients_text_view);
+        textView.setText("");*/
+        String ingredientsString = "";
+        StringBuilder s = new StringBuilder(100);
+        for (Ingredient ingredient: ingredients) {
+            s.append(ingredient.getQuantity() + " ");
+            s.append(ingredient.getMeasure() + "\t");
+            s.append(ingredient.getIngredient() + "\n\n");
+        }
+        ingredientsString = s.toString();
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplication());
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(getApplication(), ExampleAppWidgetProvider.class));
         //Now update all widgets
         String string = "macewindu";
         //string = editTextBox.getText().toString();
-        ExampleAppWidgetProvider.updatePlantWidgets(getApplication(), appWidgetManager, appWidgetIds, string);
+        ExampleAppWidgetProvider.updatePlantWidgets(getApplication(), appWidgetManager, appWidgetIds, ingredientsString);
     }
 }
