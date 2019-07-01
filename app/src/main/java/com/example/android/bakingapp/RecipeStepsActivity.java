@@ -85,6 +85,6 @@ public class RecipeStepsActivity extends AppCompatActivity {
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(getApplication(), ExampleAppWidgetProvider.class));
         //Now update all widgets
         String string = "macewindu";
-        ExampleAppWidgetProvider.updatePlantWidgets(getApplication(), appWidgetManager, appWidgetIds, ingredientsString);
+        ExampleAppWidgetProvider.updateWidgets(getApplication(), appWidgetManager, appWidgetIds, ingredientsString);
     }
 }

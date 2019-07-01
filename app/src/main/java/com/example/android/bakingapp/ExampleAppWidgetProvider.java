@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import static com.example.android.bakingapp.ExampleAppWidgetConfig.KEY_BUTTON_TEXT;
 import static com.example.android.bakingapp.ExampleAppWidgetConfig.SHARED_PREFS;
-//import com.example.widgettest.MainActivity.SHARED_PRES;
 
 public class ExampleAppWidgetProvider extends AppWidgetProvider {
 
@@ -33,7 +32,7 @@ public class ExampleAppWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    public static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, String string){
+    public static void updateWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, String string){
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId, string);
         }
