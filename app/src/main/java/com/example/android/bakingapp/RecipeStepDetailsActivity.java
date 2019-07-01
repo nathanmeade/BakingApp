@@ -34,9 +34,11 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         ArrayList<Step> steps = recipe.getSteps();
         size = steps.size();
         nextAndPreviousSteps();
+        String stepShortDescription = steps.get(id).getShortDescription();
         Toolbar toolbar = findViewById(R.id.my_awesome_toolbar);
+        toolbar.setTitle(stepShortDescription);
         Intent backIntent = new Intent(this, RecipeStepsActivity.class);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

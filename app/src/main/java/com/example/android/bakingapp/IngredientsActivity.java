@@ -5,9 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class IngredientsActivity extends AppCompatActivity {
     private Bundle recipeBundle;
@@ -25,7 +22,8 @@ public class IngredientsActivity extends AppCompatActivity {
                 .commit();
         Toolbar toolbar = findViewById(R.id.my_awesome_toolbar);
         Intent backIntent = new Intent(this, RecipeStepsActivity.class);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
+        toolbar.setTitle(R.string.ingredients);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

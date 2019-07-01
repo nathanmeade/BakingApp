@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             recyclerView.setLayoutManager(linearLayoutManager);
         }
         getJsonParsed();
+        Toolbar toolbar = findViewById(R.id.my_awesome_toolbar);
+        toolbar.setTitle(R.string.app_name);
     }
 
     public void getJsonParsed(){
