@@ -22,8 +22,6 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepAdapter.R
 
     private OnFragmentInteractionListener mListener;
 
-    //public interface On
-
     public RecipeStepsFragment() {
         // Required empty public constructor
     }
@@ -81,7 +79,7 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepAdapter.R
 
     public void ingredientsIntent(){
         Intent intent = new Intent(getContext(), IngredientsActivity.class);
-        intent.putExtra("recipe", recipeBundle);
+        intent.putExtra(getString(R.string.recipe), recipeBundle);
         startActivity(intent);
     }
 
@@ -90,7 +88,7 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepAdapter.R
         if (isTablet){
             StepDetailsFragment fragobj = new StepDetailsFragment();
             Bundle idBundle = new Bundle();
-            idBundle.putInt("id", id);
+            idBundle.putInt(getString(R.string.id), id);
             fragobj.setIdBundle(idBundle);
             fragobj.setRecipeBundle(recipeBundle);
             getFragmentManager().beginTransaction()
@@ -99,14 +97,14 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepAdapter.R
         }
         else {
             Intent intent = new Intent(getContext(), RecipeStepDetailsActivity.class);
-            intent.putExtra("id", id);
-            intent.putExtra("recipe", recipeBundle);
+            intent.putExtra(getString(R.string.id), id);
+            intent.putExtra(getString(R.string.recipe), recipeBundle);
             startActivity(intent);
         }
     }
 
     public void initializeRecyclerView(){
-        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        Recipe recipe = (Recipe) recipeBundle.getSerializable(getString(R.string.recipe));
         ArrayList<Step> steps = recipe.getSteps();
         ArrayList<Integer> mIds = new ArrayList<>();
         ArrayList<String> mShortDescriptions = new ArrayList<>();

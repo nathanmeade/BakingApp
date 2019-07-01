@@ -49,7 +49,7 @@ public class ExampleAppWidgetConfig extends AppCompatActivity {
 
         RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.example_widget);
         views.setOnClickPendingIntent(R.id.example_widget_button, pendingIntent);
-        views.setCharSequence(R.id.example_widget_button, "setText", buttonText);
+        views.setCharSequence(R.id.example_widget_button, getString(R.string.set_text), buttonText);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 

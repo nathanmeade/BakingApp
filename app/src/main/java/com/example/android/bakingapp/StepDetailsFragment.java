@@ -38,14 +38,14 @@ public class StepDetailsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_step_details, container, false);
         textView = rootView.findViewById(R.id.steps_text_view);
         playerView = rootView.findViewById(R.id.player_view);
-        id = idBundle.getInt("id");
-        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        id = idBundle.getInt(getString(R.string.id));
+        Recipe recipe = (Recipe) recipeBundle.getSerializable(getString(R.string.recipe));
         ArrayList<Step> steps = recipe.getSteps();
         Step step = steps.get(id);
         String shortDescription = step.getShortDescription();
         String description = step.getDescription();
         String videoUrl = step.getVideoURL();
-        if (shortDescription.equals("Recipe Introduction")){
+        if (shortDescription.equals(getString(R.string.recipe_introduction))){
             textView.setText("");
         }
         else {

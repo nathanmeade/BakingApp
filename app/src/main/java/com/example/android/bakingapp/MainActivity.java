@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     public void onClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeStepsActivity.class);
         Bundle recipeBundle = new Bundle();
-        recipeBundle.putSerializable("recipe", (Serializable) recipe);
-        intent.putExtra("recipe", recipeBundle);
+        recipeBundle.putSerializable(getString(R.string.recipe), (Serializable) recipe);
+        intent.putExtra(getString(R.string.recipe), recipeBundle);
         startActivity(intent);
     }
 }

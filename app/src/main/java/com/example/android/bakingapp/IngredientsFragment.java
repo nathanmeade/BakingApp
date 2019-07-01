@@ -32,7 +32,7 @@ public class IngredientsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_ingredients, container, false);
-        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        Recipe recipe = (Recipe) recipeBundle.getSerializable(getString(R.string.recipe));
         ArrayList<Ingredient> ingredients = recipe.getIngredients();
         TextView textView = rootView.findViewById(R.id.ingredients_text_view);
         textView.setText("");

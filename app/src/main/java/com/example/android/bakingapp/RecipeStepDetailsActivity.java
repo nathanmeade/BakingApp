@@ -26,11 +26,11 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         previousButton = findViewById(R.id.previous_button);
         nextButton = findViewById(R.id.next_button);
-        id = intent.getIntExtra("id", 0);
+        id = intent.getIntExtra(getString(R.string.id), 0);
         Bundle idBundle = new Bundle();
-        idBundle.putInt("id", id);
-        recipeBundle = intent.getBundleExtra("recipe");
-        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        idBundle.putInt(getString(R.string.id), id);
+        recipeBundle = intent.getBundleExtra(getString(R.string.recipe));
+        Recipe recipe = (Recipe) recipeBundle.getSerializable(getString(R.string.recipe));
         ArrayList<Step> steps = recipe.getSteps();
         size = steps.size();
         nextAndPreviousSteps();
@@ -43,7 +43,7 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //What to do on back clicked
-                backIntent.putExtra("recipe", recipeBundle);
+                backIntent.putExtra(getString(R.string.recipe), recipeBundle);
                 startActivity(backIntent);
             }
         });
@@ -91,8 +91,8 @@ public class RecipeStepDetailsActivity extends AppCompatActivity {
 
     private void stepIntent(int step){
         intent = new Intent(this, RecipeStepDetailsActivity.class);
-        intent.putExtra("id", step);
-        intent.putExtra("recipe", recipeBundle);
+        intent.putExtra(getString(R.string.id), step);
+        intent.putExtra(getString(R.string.recipe), recipeBundle);
         startActivity(intent);
     }
 }

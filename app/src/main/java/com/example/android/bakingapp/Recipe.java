@@ -43,8 +43,3 @@ public class Recipe implements Serializable {
         return steps;
     }
 }
-
-/*
-public class Ingredients {
-
-}*/

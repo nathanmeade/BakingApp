@@ -21,25 +21,21 @@ public class RecipeStepsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_steps);
         Intent intent = getIntent();
-        recipeBundle = intent.getBundleExtra("recipe");
+        String recipeString = getString(R.string.recipe);
+        recipeBundle = intent.getBundleExtra(recipeString);
         Bundle idBundle = new Bundle();
-        idBundle.putInt("id", 0);
+        String idString = getString(R.string.id);
+        idBundle.putInt(idString, 0);
         isTablet = (findViewById(R.id.tablet_layout)!=null);
-        if (isTablet){
+        if (isTablet) {
             StepDetailsFragment fragobj = new StepDetailsFragment();
             fragobj.setIdBundle(idBundle);
             fragobj.setRecipeBundle(recipeBundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.step_details_fragment_tag, fragobj)
                     .commit();
-/*            IngredientsFragment fragobj = new IngredientsFragment();
-            fragobj.setRecipeBundle(recipeBundle);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.step_details_fragment_tag, fragobj)
-                    .commit();*/
         }
-        //recipeStepAdapterOnClickHandler = this;
-        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        Recipe recipe = (Recipe) recipeBundle.getSerializable(getString(R.string.recipe));
         String recipeName = recipe.getText();
         Toolbar toolbar = findViewById(R.id.my_awesome_toolbar);
         Intent backIntent = new Intent(this, MainActivity.class);
@@ -49,7 +45,6 @@ public class RecipeStepsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //What to do on back clicked
-                //backIntent.putExtra("recipe", recipeBundle);
                 startActivity(backIntent);
             }
         });
@@ -59,14 +54,11 @@ public class RecipeStepsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        recipeBundle = intent.getBundleExtra("recipe");
-        //should be create fragment instead
+        recipeBundle = intent.getBundleExtra(getString(R.string.recipe));
         if(recipeBundle!=null){
             updateWidget(recipeBundle);
             createFragment();
         }
-
-        //initializeRecyclerView();
     }
 
     private void createFragment(){
@@ -79,18 +71,8 @@ public class RecipeStepsActivity extends AppCompatActivity {
     }
 
     public void updateWidget(Bundle bundle){
-/*        Intent intent = new Intent(this, ExampleAppWidgetProvider.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-// Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-// since it seems the onUpdate() is only fired on that:
-        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), ExampleAppWidgetProvider.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        sendBroadcast(intent);*/
-
-        Recipe recipe = (Recipe) recipeBundle.getSerializable("recipe");
+        Recipe recipe = (Recipe) recipeBundle.getSerializable(getString(R.string.recipe));
         ArrayList<Ingredient> ingredients = recipe.getIngredients();
-/*        TextView textView = rootView.findViewById(R.id.ingredients_text_view);
-        textView.setText("");*/
         String ingredientsString = "";
         StringBuilder s = new StringBuilder(100);
         for (Ingredient ingredient: ingredients) {
@@ -99,12 +81,10 @@ public class RecipeStepsActivity extends AppCompatActivity {
             s.append(ingredient.getIngredient() + "\n\n");
         }
         ingredientsString = s.toString();
-
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplication());
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(getApplication(), ExampleAppWidgetProvider.class));
         //Now update all widgets
         String string = "macewindu";
-        //string = editTextBox.getText().toString();
         ExampleAppWidgetProvider.updatePlantWidgets(getApplication(), appWidgetManager, appWidgetIds, ingredientsString);
     }
 }

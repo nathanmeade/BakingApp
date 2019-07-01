@@ -14,7 +14,7 @@ public class IngredientsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients);
         Intent intent = getIntent();
-        recipeBundle = intent.getBundleExtra("recipe");
+        recipeBundle = intent.getBundleExtra(getString(R.string.recipe));
         IngredientsFragment fragobj = new IngredientsFragment();
         fragobj.setRecipeBundle(recipeBundle);
         getSupportFragmentManager().beginTransaction()
@@ -22,13 +22,13 @@ public class IngredientsActivity extends AppCompatActivity {
                 .commit();
         Toolbar toolbar = findViewById(R.id.my_awesome_toolbar);
         Intent backIntent = new Intent(this, RecipeStepsActivity.class);
-        toolbar.setTitle(R.string.ingredients);
+        toolbar.setTitle(R.string.ingredientsLabel);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //What to do on back clicked
-                backIntent.putExtra("recipe", recipeBundle);
+                backIntent.putExtra(getString(R.string.recipe), recipeBundle);
                 startActivity(backIntent);
             }
         });

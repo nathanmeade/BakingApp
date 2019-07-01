@@ -30,7 +30,6 @@ public class ExampleAppWidgetProvider extends AppWidgetProvider {
             remoteViews.setCharSequence(R.id.example_widget_button, "setText", buttonText);
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
-            Log.d("nathanTest", "onUpdate called");
         }
     }
 
